@@ -1,14 +1,20 @@
-import Navbar from "@/components/Navbar";
+"use client";
+
 import Hero from "@/components/Hero";
 import Team from "@/components/Team";
-import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
+import TrustSection from "@/components/TrustSection";
+import Gallery from "@/components/Gallery";
+import Services from "@/components/Services";
+import GlobalReach from "@/components/GlobalReach";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-gold-500/30">
-      <Navbar />
+    <main className="min-h-screen">
       <Hero />
+      <TrustSection />
+      <Services />
+      <GlobalReach />
       <Team />
       <Gallery />
       <Contact />

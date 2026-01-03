@@ -1,46 +1,79 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-outfit);
-  --font-serif: var(--font-playfair);
+  /* Venezia Flow - Liquid Primitives */
+  --color-void: #050505;
+  --color-starlight: #ebebeb;
+  --color-gold-liquid: #c5a059;
+  --color-gold-dim: #8a703d;
 
-  --color-background: #050505;
-  --color-foreground: #f5f5f5;
-  
-  --color-gold-50: #fbf8eb;
-  --color-gold-100: #f5eccd;
-  --color-gold-200: #ebd89f;
-  --color-gold-300: #dfc070;
-  --color-gold-400: #d4af37; /* Primary Gold */
-  --color-gold-500: #b59228;
-  --color-gold-600: #94711f;
-  --color-gold-700: #76561b;
-  --color-gold-800: #61461c;
-  --color-gold-900: #533b1e;
+  --color-surface-liquid: rgba(255, 255, 255, 0.05);
+  --color-surface-glass: rgba(10, 10, 10, 0.6);
 
-  --color-noir-50: #f6f6f6;
-  --color-noir-100: #e7e7e7;
-  --color-noir-200: #d1d1d1;
-  --color-noir-300: #b0b0b0;
-  --color-noir-400: #888888;
-  --color-noir-500: #6d6d6d;
-  --color-noir-600: #5d5d5d;
-  --color-noir-700: #4f4f4f;
-  --color-noir-800: #454545;
-  --color-noir-900: #3d3d3d;
-  --color-noir-950: #050505;
+  --font-display: var(--font-jakarta), "Helvetica Neue", sans-serif;
+  --font-mono: "JetBrains Mono", "Courier New", monospace;
+  --font-sans: var(--font-inter), "Arial", sans-serif;
+
+  --ease-fluid: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-:root {
-  --background: #050505;
-  --foreground: #f5f5f5;
+/* Global Reset & Flow */
+body {
+  background-color: var(--color-void);
+  color: var(--color-starlight);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  cursor: none;
+  /* Custom cursor will take over */
 }
 
-@layer base {
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-    @apply antialiased;
+/* Fluid Gradient Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background:
+    radial-gradient(circle at 15% 50%, rgba(197, 160, 89, 0.08), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.03), transparent 25%);
+  pointer-events: none;
+  z-index: -1;
+  animation: pulse-liquid 10s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-liquid {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.1);
   }
 }
 
+/* Typography Utilities */
+.text-fluid-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.text-fluid-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Custom Scrollbar Hide */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}

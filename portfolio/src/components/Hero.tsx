@@ -1,86 +1,149 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { UNSPLASH_IMAGES } from "@/lib/image-utils";
-import Image from "next/image";
+import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
+import { useRef } from "react";
+
+
 
 export default function Hero() {
-    return (
-        <section id="hero" className="relative h-screen w-full overflow-hidden flex items-center justify-center">
-            {/* Background Image with Overlay */}
-            <div className="absolute inset-0 z-0">
-                <Image
-                    src={UNSPLASH_IMAGES.hero}
-                    alt="Luxury Abstract Background"
-                    fill
-                    className="object-cover opacity-60" // Removed grayscale, increased opacity
-                    priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/80" /> {/* Lighter overlay */}
-            </div>
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollY } = useScroll();
 
-            {/* Content */}
-            <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl mx-auto">
+    // SVZ Style: Reveal animations
+    const y = useTransform(scrollY, [0, 1000], [0, 400]);
+    const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+
+    const scrollToContent = () => {
+        const expertiseSection = document.getElementById("expertise");
+        if (expertiseSection) {
+            expertiseSection.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
+    // Mouse Parallax Logic
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const { clientX, clientY } = e;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        mouseX.set((clientX - centerX) * 0.05); // Subtle movement
+        mouseY.set((clientY - centerY) * 0.05);
+    };
+
+    return (
+        <section
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            className="h-screen relative flex flex-col items-center justify-center overflow-hidden bg-void text-starlight"
+        >
+
+            {/* SVZ Style: Noise Texture Overlay */}
+            <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+
+            {/* Architectural Grid Background */}
+            <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+
+            {/* Mouse Parallax Background Elements (Giant 'VE') */}
+            <motion.div
+                style={{ x: mouseX, y: mouseY }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-[0.02]"
+            >
+                <span className="text-[40vw] font-bold font-display leading-none mr-[-5vw]">V</span>
+                <span className="text-[40vw] font-bold font-display leading-none ml-[-5vw]">E</span>
+            </motion.div>
+
+
+
+            {/* Main Content: SVZ Style Typography */}
+            <div className="relative z-10 flex flex-col items-center text-center max-w-5xl px-6">
+
+                {/* Intro Text */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    transition={{ delay: 2.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex items-center gap-4 mb-8"
                 >
-                    <span className="inline-block py-1 px-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-[10px] md:text-xs font-bold tracking-[0.2em] text-gold-300 uppercase mb-6">
-                        Global Trade Redefined
-                    </span>
+                    <div className="h-[1px] w-12 bg-gold-liquid/50" />
+                    <span className="text-sm font-mono tracking-[0.2em] text-gold-liquid uppercase">EST. 2024</span>
+                    <div className="h-[1px] w-12 bg-gold-liquid/50" />
                 </motion.div>
 
-                <motion.h1
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-                    className="font-serif text-5xl md:text-7xl lg:text-9xl font-medium text-white tracking-tighter mb-4"
-                >
-                    VENEZIA <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">EXPORTS</span>
-                </motion.h1>
+                {/* Massive Headline - Mixed Case (SVZ Style - Masked Slide Up) */}
+                <div className="flex flex-col items-center leading-[0.85] tracking-tight">
+                    <div className="overflow-hidden">
+                        <motion.h1
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 2.2 }} // Start right after preloader
+                            className="text-[12vw] md:text-[8rem] font-display font-bold text-white mb-2"
+                        >
+                            crafting
+                        </motion.h1>
+                    </div>
 
+                    <div className="overflow-hidden">
+                        <motion.h1
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 2.3 }}
+                            className="text-[12vw] md:text-[8rem] font-display font-bold uppercase text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50"
+                        >
+                            GLOBAL
+                        </motion.h1>
+                    </div>
+
+                    <div className="overflow-hidden">
+                        <motion.h1
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 2.4 }}
+                            className="text-[12vw] md:text-[8rem] font-display font-bold uppercase text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50"
+                        >
+                            LOGISTICS
+                        </motion.h1>
+                    </div>
+                </div>
+
+                {/* Subtext - Fade In */}
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                    className="text-white/60 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mb-10"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.6, duration: 1 }}
+                    className="mt-8 text-lg md:text-xl font-light text-white/60 max-w-lg leading-relaxed"
                 >
-                    Bridging the gap between Indian craftsmanship and the global market.
-                    Premium quality, curated for luxury.
+                    Seamless supply chain solutions bridging India to the world.
                 </motion.p>
 
+                {/* Minimalist CTA (SVZ Style) */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1 }}
-                    className="flex flex-col md:flex-row gap-4"
+                    transition={{ delay: 2.8 }}
+                    className="mt-16"
                 >
-                    <a
-                        href="#gallery"
-                        className="px-8 py-3 bg-white text-black text-sm font-bold uppercase tracking-widest hover:bg-gold-400 transition-colors duration-300"
+                    <button
+                        onClick={scrollToContent}
+                        className="group flex flex-col items-center gap-2 cursor-pointer transition-opacity hover:opacity-80"
                     >
-                        Explore Collection
-                    </a>
-                    <a
-                        href="#contact"
-                        className="px-8 py-3 border border-white/20 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/5 transition-colors duration-300"
-                    >
-                        Contact Us
-                    </a>
+                        <span className="text-xs font-mono tracking-widest text-white/50 group-hover:text-gold-liquid transition-colors">
+                            ENTER
+                        </span>
+                        <div className="w-[1px] h-12 bg-white/20 group-hover:h-16 group-hover:bg-gold-liquid transition-all duration-500 ease-fluid" />
+                    </button>
                 </motion.div>
             </div>
 
             {/* Scroll Indicator */}
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                style={{ opacity }}
+                className="absolute bottom-12 left-0 right-0 flex justify-center pointer-events-none"
             >
-                <span className="text-[10px] uppercase tracking-widest text-white/40">Scroll</span>
-                <div className="w-[1px] h-12 bg-gradient-to-b from-white/0 via-gold-400 to-white/0 animate-pulse" />
+                <span className="text-[10px] font-mono tracking-widest text-white/20">SCROLL TO EXPLORE</span>
             </motion.div>
+
         </section>
     );
 }

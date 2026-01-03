@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google"; // Ready.so aesthetic
 import "./globals.css";
 import { clsx } from "clsx";
+import SmoothScroll from "@/components/SmoothScroll";
+import CornerNav from "@/components/CornerNav";
+import FluidCursor from "@/components/FluidCursor";
+import Preloader from "@/components/Preloader"; // SVZ Preloader
 
-const outfit = localFont({
-  src: [
-    { path: "../../public/fonts/Outfit-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/Outfit-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../../public/fonts/Outfit-Bold.ttf", weight: "700", style: "normal" },
-  ],
-  variable: "--font-outfit",
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+  display: "swap",
 });
 
-const playfair = localFont({
-  src: [
-    { path: "../../public/fonts/PlayfairDisplay-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/PlayfairDisplay-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../../public/fonts/PlayfairDisplay-Italic.ttf", weight: "400", style: "italic" },
-  ],
-  variable: "--font-playfair",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,15 +30,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={clsx(
-          outfit.variable,
-          playfair.variable,
-          "antialiased bg-background text-foreground font-sans selection:bg-gold-500/30 selection:text-gold-200"
+          jakarta.variable,
+          inter.variable,
+          "antialiased bg-void text-starlight font-sans selection:bg-gold-liquid selection:text-void"
         )}
       >
-        {children}
+        <Preloader />
+        <SmoothScroll>
+          <div className="hidden lg:block">
+            <FluidCursor />
+          </div>
+          <CornerNav />
+          <main className="relative z-10">
+            {children}
+          </main>
+        </SmoothScroll>
       </body>
     </html>
   );
