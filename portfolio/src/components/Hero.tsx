@@ -25,6 +25,8 @@ export default function Hero() {
     const mouseY = useMotionValue(0);
 
     const handleMouseMove = (e: React.MouseEvent) => {
+        // Optimization: Skip on mobile or if needed, but for now just keeping it subtle.
+        // In a real optimized scenario, we'd check window.matchMedia('(hover: none)')
         const { clientX, clientY } = e;
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
@@ -63,7 +65,7 @@ export default function Hero() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 2.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="flex items-center gap-4 mb-8"
                 >
                     <div className="h-[1px] w-12 bg-gold-liquid/50" />
@@ -77,8 +79,8 @@ export default function Hero() {
                         <motion.h1
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
-                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 2.2 }} // Start right after preloader
-                            className="text-[12vw] md:text-[8rem] font-display font-bold text-white mb-2"
+                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }} // Faster start
+                            className="text-[14vw] md:text-[8rem] font-display font-bold text-white mb-2"
                         >
                             crafting
                         </motion.h1>
@@ -88,8 +90,8 @@ export default function Hero() {
                         <motion.h1
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
-                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 2.3 }}
-                            className="text-[12vw] md:text-[8rem] font-display font-bold uppercase text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50"
+                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.3 }}
+                            className="text-[14vw] md:text-[8rem] font-display font-bold uppercase text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50"
                         >
                             GLOBAL
                         </motion.h1>
@@ -99,8 +101,8 @@ export default function Hero() {
                         <motion.h1
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
-                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 2.4 }}
-                            className="text-[12vw] md:text-[8rem] font-display font-bold uppercase text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50"
+                            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.4 }}
+                            className="text-[14vw] md:text-[8rem] font-display font-bold uppercase text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50"
                         >
                             LOGISTICS
                         </motion.h1>
@@ -111,8 +113,8 @@ export default function Hero() {
                 <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 2.6, duration: 1 }}
-                    className="mt-8 text-lg md:text-xl font-light text-white/60 max-w-lg leading-relaxed"
+                    transition={{ delay: 1.0, duration: 1 }}
+                    className="mt-8 text-lg md:text-xl font-light text-white/60 max-w-lg leading-relaxed px-4"
                 >
                     Seamless supply chain solutions bridging India to the world.
                 </motion.p>
@@ -126,7 +128,7 @@ export default function Hero() {
                 >
                     <button
                         onClick={scrollToContent}
-                        className="group flex flex-col items-center gap-2 cursor-pointer transition-opacity hover:opacity-80"
+                        className="group flex flex-col items-center gap-2 cursor-pointer transition-opacity hover:opacity-80 active:opacity-60"
                     >
                         <span className="text-xs font-mono tracking-widest text-white/50 group-hover:text-gold-liquid transition-colors">
                             ENTER
@@ -141,7 +143,7 @@ export default function Hero() {
                 style={{ opacity }}
                 className="absolute bottom-12 left-0 right-0 flex justify-center pointer-events-none"
             >
-                <span className="text-[10px] font-mono tracking-widest text-white/20">SCROLL TO EXPLORE</span>
+                <span className="text-[10px] font-mono tracking-widest text-white/20 animate-pulse">SCROLL TO EXPLORE</span>
             </motion.div>
 
         </section>

@@ -51,18 +51,20 @@ export default function Gallery() {
                     </div>
 
                     {PROJECTS.map((project) => (
-                        <div key={project.id} className="relative group w-[50vw] h-[60vh] flex-shrink-0 bg-white/5 border border-white/10 overflow-hidden">
+                        <div key={project.id} className="relative group w-[85vw] md:w-[50vw] h-[50vh] md:h-[60vh] flex-shrink-0 bg-white/5 border border-white/10 overflow-hidden">
                             <Image
                                 src={project.image}
                                 alt={project.title}
                                 fill
+                                sizes="(max-width: 768px) 85vw, 50vw"
+                                className="object-cover"
                             />
                             {/* Overlay */}
                             <div className="absolute inset-0 bg-void/20 group-hover:bg-void/0 transition-colors duration-500" />
 
                             <div className="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent w-full text-white translate-y-6 group-hover:translate-y-0 transition-transform duration-500 ease-fluid">
                                 <span className="text-gold-liquid text-fluid-mono tracking-widest text-[10px]">{project.category}</span>
-                                <h3 className="text-3xl font-display mt-1 group-hover:text-gold-liquid transition-colors duration-500">{project.title}</h3>
+                                <h3 className="text-2xl md:text-3xl font-display mt-1 group-hover:text-gold-liquid transition-colors duration-500">{project.title}</h3>
                             </div>
                         </div>
                     ))}

@@ -79,7 +79,7 @@ export default function Team() {
                     top: springY,
                     rotate: rotate
                 }}
-                className="absolute z-0 w-[400px] h-[500px] pointer-events-none -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg grayscale contrast-125"
+                className="hidden md:block absolute z-0 w-[400px] h-[500px] pointer-events-none -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg grayscale contrast-125"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{
                     opacity: activeImg ? 1 : 0,
